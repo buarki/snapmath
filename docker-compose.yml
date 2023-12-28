@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  jupyter:
+    container_name: jupyter
+    image: buarki/augmented-jupyter-notebook:sha-3b393b1082cd9af40a7f0832b8a033f0c087e97a
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_TOKEN=password
+      - GRANT_SUDO=yes
+    volumes:
+      - jupyter_data:/home/jovyan/work
+
+volumes:
+  jupyter_data:
+    external: false
