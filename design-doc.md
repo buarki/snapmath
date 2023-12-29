@@ -33,11 +33,11 @@ My humble idea to accomplish such challenge is creating an app that can be run o
 
 An overview of how the app should look like can be seen on the images below (and please don't envy my prototyping skills):
 
-<img src="./imgs/sketch-start.png" width="512" alt="snapapp once opened">
+<img src="./imgs/sketch-start.png" width="350" alt="snapapp once opened">
 
 And once images of numbers are loaded and user hits button `=`:
 
-<img src="./imgs/sketch-result.png" width="512" alt="snapapp once image numbers are uploaded">
+<img src="./imgs/sketch-result.png" width="350" alt="snapapp once image numbers are uploaded">
 
 
 ## 2. Goals of this project
