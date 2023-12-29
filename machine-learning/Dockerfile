@@ -12,4 +12,6 @@ COPY numbers numbers/
 
 COPY snapmath.ipynb snapmath.ipynb
 
+COPY tensorflow-serving-client.ipynb tensorflow-serving-client.ipynb
+
 EXPOSE 8888
