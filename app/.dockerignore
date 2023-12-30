@@ -1,0 +1,7 @@
+.gitignore
+.git/
+README.md
+*.txt
+!*important.txt
+**/*.log
+**/temp
