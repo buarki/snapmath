@@ -1,0 +1,9 @@
+tensorflow==2.15.0
+opencv-python==4.8.1.78
+scikit-learn==1.3.2
+matplotlib==3.8.2
+pydto==0.5.1
+numpy==1.23.5
+pandas==2.1.4
+protobuf==3.20.*
+flask==3.0.0

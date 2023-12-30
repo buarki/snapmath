@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>snapmath</title>
+</head>
+<body>
+    <h1>snapmath</h1>
+
+    <form id="calculator-form">
+        <label for="image1">Select Image 1:</label>
+        <input type="file" id="image1" name="image1" accept="image/*" onchange="displayThumbnail('image1', 'image1-preview')">
+        <img id="image1-preview" class="thumbnail" alt="Image 1 Preview">
+
+        <label for="operation">Select Operation:</label>
+        <select id="operation" name="operation">
+            <option value="+">Addition (+)</option>
+            <option value="-">Subtraction (-)</option>
+            <option value="*">Multiplication (*)</option>
+            <option value="/">Division (/)</option>
+        </select>
+
+        <label for="image2">Select Image 2:</label>
+        <input type="file" id="image2" name="image2" accept="image/*" onchange="displayThumbnail('image2', 'image2-preview')">
+        <img id="image2-preview" class="thumbnail" alt="Image 2 Preview">
+
+        <button type="button" onclick="performCalculation()">=</button>
+
+        <p id="result"></p>
+    </form>
+
+    <script>
+        function displayThumbnail(inputId, previewId) {
+            var input = document.getElementById(inputId);
+            var preview = document.getElementById(previewId);
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        async function performCalculation() {
+            var image1 = document.getElementById('image1').files[0];
+            var operation = document.getElementById('operation').value;
+            var image2 = document.getElementById('image2').files[0];
+
+            if (!image1 || !image2) {
+                alert("Please select both images");
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('image1', image1);
+            formData.append('image2', image2);
+            formData.append('operation', operation);
+
+            try {
+                var response = await fetch('/predict-result', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    var result = await response.json();
+                    console.log("Prediction Result:", result);
+                    document.getElementById('result').innerText = 'Result: ' + result.predicted_label;
+                } else {
+                    console.error("Error:", response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error("Request failed:", error);
+            }
+        }
+    </script>
+    <style>
+        .thumbnail {
+            max-width: 100px;
+            max-height: 100px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</body>
+</html>
