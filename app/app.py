@@ -1,8 +1,10 @@
 import json
 from flask import Flask, request, render_template
 from predict_image import predict
+from constants import MB
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 1 * MB
 
 @app.route('/predict-result', methods=['POST'])
 def predict3():
@@ -36,12 +38,11 @@ def predict3():
 def home():
   return render_template('index.html')
 
-# TODO set max file limt
+# TODO SUPPORTED FILES...
 # TODO RATE LIMITING
 # TODO LOGGING...
 # TODO TRACING...
 # TODO CORS
-# TODO SUPPORTED FILES...
 # TODO if wrong image is sent?
 # TODO if the division if by zero?
 # TODO specify port?
