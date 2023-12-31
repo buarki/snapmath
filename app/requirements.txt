@@ -7,3 +7,5 @@ numpy==1.23.5
 pandas==2.1.4
 protobuf==3.20.*
 flask==3.0.0
+Flask-Limiter==3.5.0
+
