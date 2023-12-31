@@ -1,11 +1,18 @@
 from prepare_image import prepare_image_from_data
 import tensorflow as tf
 import numpy as np
+import os
+import sys
 
-model_name = 'models/1703825980'
+model_version = os.environ.get("MODEL_VERSION")
+if model_version is None:
+  print("Error: MODEL_VERSION environment variable is not set.")
+  sys.exit(1)
+
+model_name = f'models/{model_version}'
 print(">> loading model...", flush=True)
 loaded_model = tf.saved_model.load(model_name)
-print(">> loaded model!", flush=True)
+print(f">> loaded model {model_name}!", flush=True)
 
 def predict(image_file):
   if image_file.filename == '':
