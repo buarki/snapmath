@@ -3,7 +3,7 @@ FROM tensorflow/tensorflow@sha256:2609730891a3c10cde42ead38d2c6ee7080309811957ad
 WORKDIR /snapmath
 
 COPY app/templates templates/
-COPY app/app.py app.py
+COPY app/*.py .
 COPY app/requirements.txt requirements.txt
 COPY models/ models/
 
