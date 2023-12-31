@@ -2,17 +2,24 @@ import json
 from flask import Flask, request, render_template
 from predict_image import predict
 from constants import MB
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
+limiter = Limiter(
+  app = app,
+  key_func = get_remote_address,
+  storage_uri = "memory://",
+)
 app.config['MAX_CONTENT_LENGTH'] = 2 * MB
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-# Function to check if a filename has an allowed extension
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/predict-result', methods=['POST'])
+@limiter.limit("10 per minute")
 def predict3():
   try:
     if 'image1' not in request.files or 'image2' not in request.files:
@@ -49,14 +56,10 @@ def predict3():
 def home():
   return render_template('index.html')
 
-# TODO SUPPORTED FILES...
-
-# TODO RATE LIMITING
+# TODO CORS
 # TODO LOGGING...
 # TODO TRACING...
-# TODO CORS
 # TODO if wrong image is sent?
 # TODO if the division if by zero?
-# TODO specify port?
 if __name__ == "__main__":
   app.run(debug=True)
