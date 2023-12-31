@@ -19,18 +19,14 @@ print(">> loading model...", flush=True)
 loaded_model = tf.saved_model.load(model_name)
 print(f">> loaded model {model_name}!", flush=True)
 
-def predict(image_file) -> PredictionResult:
-  if image_file.filename == '':
-    print("file is empty", flush=True)
-    raise Exception("error 'No selected file")
-
+def predict(image_file: np.ndarray) -> PredictionResult:
   # TODO just receive it rather than handling it
-  image_file_content = image_file.read()
-  print("read file", flush=True)
+  # image_file_content = image_file.read()
+  # print("read file", flush=True)
   
-  prepared_input = prepare_image_from_data(image_file_content)
+  # prepared_input = prepare_image_from_data(image_file)
   print("prepared image", flush=True)
-  predictions = loaded_model(tf.constant(prepared_input, dtype=tf.float32))
+  predictions = loaded_model(tf.constant(image_file, dtype=tf.float32))
   print(f"GOT PREDICTIONS {predictions}", flush=True)
   return get_most_probable_number(predictions)
 

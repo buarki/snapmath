@@ -9,3 +9,6 @@ run-tf-service:
 
 build-app:
 	docker build -f app/Dockerfile -t snapmath-app .
+
+run-app:
+	docker run -p 5000:5000 -e MODEL_VERSION="1703825980" snapmath-app
