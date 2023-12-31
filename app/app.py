@@ -1,10 +1,10 @@
 import json
 from flask import Flask, request, render_template
-from predict_image import predict
 from constants import MB
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS
+from resolve_computation import resolve, SumImagesInput, ImagesSumResult
 
 app = Flask(__name__)
 CORS(app)
@@ -22,7 +22,7 @@ def allowed_file(filename):
 
 @app.route('/predict-result', methods=['POST'])
 @limiter.limit("10 per minute")
-def predict3():
+def predictHandler():
   try:
     if 'image1' not in request.files or 'image2' not in request.files:
       print("images are missing", flush=True)
@@ -38,14 +38,13 @@ def predict3():
     operation = request.form['operation']
     print("OPERATION is", operation, flush=True)
 
-    a = predict(number1_image)
-    print(f"a result {a}", flush=True)
-    b = predict(number2_image)
-    print(f"b result {b}", flush=True)
-
-    # Create a dictionary with the predicted label
-    result = {'predicted_label': int(a['number'] + b['number'])}
-
+    computation = resolve(SumImagesInput(image_1 = number1_image, image_2 = number2_image, operation = operation))
+    result = {
+      'predicted_label': int(computation.result),
+      'probability': float(computation.probability),
+    }
+    print(f"RSPONSE, {result}", flush=True)
+    print(">> criando response", flush=True)
     json_result = json.dumps(result)
 
     # Return the JSON response
@@ -58,9 +57,7 @@ def predict3():
 def home():
   return render_template('index.html')
 
-# TODO CORS
-
-# TODO LOGGING...
+# TODO handle logging
 # TODO if wrong image is sent?
 # TODO if the division if by zero?
 if __name__ == "__main__":
