@@ -4,8 +4,10 @@ from predict_image import predict
 from constants import MB
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 limiter = Limiter(
   app = app,
   key_func = get_remote_address,
@@ -57,8 +59,8 @@ def home():
   return render_template('index.html')
 
 # TODO CORS
+
 # TODO LOGGING...
-# TODO TRACING...
 # TODO if wrong image is sent?
 # TODO if the division if by zero?
 if __name__ == "__main__":
