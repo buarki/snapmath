@@ -11,7 +11,7 @@
 
     <form id="calculator-form">
         <label for="image1">Select Image 1:</label>
-        <input type="file" id="image1" name="image1" accept="image/*" onchange="displayThumbnail('image1', 'image1-preview')">
+        <input type="file" id="image1" name="image1" accept=".png, .jpg, .jpeg" onchange="displayThumbnail('image1', 'image1-preview')">
         <img id="image1-preview" class="thumbnail" alt="Image 1 Preview">
 
         <label for="operation">Select Operation:</label>
@@ -23,7 +23,7 @@
         </select>
 
         <label for="image2">Select Image 2:</label>
-        <input type="file" id="image2" name="image2" accept="image/*" onchange="displayThumbnail('image2', 'image2-preview')">
+        <input type="file" id="image2" name="image2" accept=".png, .jpg, .jpeg" onchange="displayThumbnail('image2', 'image2-preview')">
         <img id="image2-preview" class="thumbnail" alt="Image 2 Preview">
 
         <button type="button" onclick="performCalculation()">=</button>
