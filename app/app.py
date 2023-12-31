@@ -5,6 +5,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS
 from resolve_computation import resolve, SumImagesInput, ImagesSumResult
+from decorators import check_images_presence, ensure_proper_image_extensions
 
 app = Flask(__name__)
 CORS(app)
@@ -15,26 +16,14 @@ limiter = Limiter(
 )
 app.config['MAX_CONTENT_LENGTH'] = 2 * MB
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-
-def allowed_file(filename):
-  return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 @app.route('/predict-result', methods=['POST'])
 @limiter.limit("10 per minute")
+@check_images_presence
+@ensure_proper_image_extensions
 def predictHandler():
   try:
-    if 'image1' not in request.files or 'image2' not in request.files:
-      print("images are missing", flush=True)
-      return json.dumps({'error': 'missing image files'})
-
-    number1_image = request.files['image1']
-    number2_image = request.files['image2']
-
-    if not (allowed_file(number1_image.filename) and allowed_file(number2_image.filename)):
-      print("Invalid file type", flush=True)
-      return json.dumps({'error': 'Invalid file type. Allowed types: png, jpg, jpeg'})
-
+    number1_image = request.files['image1'].read()
+    number2_image = request.files['image2'].read()
     operation = request.form['operation']
     print("OPERATION is", operation, flush=True)
 
@@ -59,6 +48,5 @@ def home():
 
 # TODO handle logging
 # TODO if wrong image is sent?
-# TODO if the division if by zero?
 if __name__ == "__main__":
   app.run(debug=True)

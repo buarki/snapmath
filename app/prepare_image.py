@@ -8,7 +8,7 @@ resize the image to the shape 28x28 (the shape the model expects),
 normalize it and then returns a tensor with shape (1, 28, 28, 1)
 carrying the image.
 '''
-def prepare_image_from_data(image_data):
+def prepare_image_from_data(image_data: bytes) -> np.ndarray:
   print("starting...", flush=True)
   img = cv2.imdecode(np.fromstring(image_data, np.uint8), cv2.IMREAD_UNCHANGED)
   print("decoded image",  flush=True)
