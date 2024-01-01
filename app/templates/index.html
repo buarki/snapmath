@@ -101,13 +101,19 @@
 
                 if (response.ok) {
                     const result = await response.json();
-                    document.getElementById('result').innerText = `Result: ${result.result} (Probability: ${(result.probability * 100).toFixed(4)}%)`;
+                    document.getElementById('result').innerText = formatOutput(result);
                 } else {
                     console.error("Error:", response.status, response.statusText);
                 }
             } catch (error) {
                 console.error("Request failed:", error);
             }
+        }
+
+        function formatOutput(result) {
+            return `Result: ${result.result} (Probability: ${(result.probability * 100).toFixed(4)}%)
+                    Image 1: ${result.number1_result} (Probability ${(result.number1_probability * 100).toFixed(4)}%)
+                    Image 2: ${result.number2_result} ( Probability ${(result.number2_probability * 100).toFixed(4)}%)`
         }
 
         function resetForm() {
