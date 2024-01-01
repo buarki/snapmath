@@ -14,6 +14,8 @@
 docker run -p 5000:5000 -e MODEL_VERSION="1703825980" buarki/snapmath-app
 ```
 
+Once running go to http://localhost:5000. You can find some images to use at the ML directory.
+
 ## App in action
 
 <img src="./imgs/app-in-action-1.png" width="350" alt="App in action">
