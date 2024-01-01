@@ -101,7 +101,7 @@
 
                 if (response.ok) {
                     const result = await response.json();
-                    document.getElementById('result').innerText = `Result: ${result.predicted_label} (Probability: ${(result.probability * 100).toFixed(4)}%)`;
+                    document.getElementById('result').innerText = `Result: ${result.result} (Probability: ${(result.probability * 100).toFixed(4)}%)`;
                 } else {
                     console.error("Error:", response.status, response.statusText);
                 }

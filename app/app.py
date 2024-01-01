@@ -29,12 +29,10 @@ def predictHandler():
 
     computation = resolve(SumImagesInput(image_1 = number1_image, image_2 = number2_image, operation = operation))
     print(f"computation {computation}, {computation.result} and {computation.probability}")
-    result = {
-      'predicted_label': float(computation.result),
+    return json.dumps({
+      'result': float(computation.result),
       'probability': float(computation.probability),
-    }
-    print(f"RSPONSE, {result}", flush=True)
-    return json.dumps(result)
+    })
   except Exception as e:
     print(f"ERROR: {str(e)}", flush=True)
     return json.dumps({'error': str(e)})
