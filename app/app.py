@@ -4,8 +4,11 @@ from constants import MB
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_cors import CORS
-from resolve_computation import resolve, SumImagesInput, ImagesSumResult
+from resolve_computation import SumImagesInput
 from decorators import check_images_presence, ensure_proper_image_extensions
+from app_config_factory import prepare_computation_executor_or_fail
+
+compute = prepare_computation_executor_or_fail()
 
 app = Flask(__name__)
 CORS(app)
@@ -27,7 +30,7 @@ def predictHandler():
     operation = request.form['operation']
     print("OPERATION is", operation, flush=True)
 
-    computation = resolve(SumImagesInput(image_1 = number1_image, image_2 = number2_image, operation = operation))
+    computation = compute(SumImagesInput(image_1 = number1_image, image_2 = number2_image, operation = operation))
     print(f"computation {computation}, {computation.result} and {computation.probability}")
     return computation.toJSON()
   except Exception as e:
