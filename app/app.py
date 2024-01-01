@@ -29,10 +29,7 @@ def predictHandler():
 
     computation = resolve(SumImagesInput(image_1 = number1_image, image_2 = number2_image, operation = operation))
     print(f"computation {computation}, {computation.result} and {computation.probability}")
-    return json.dumps({
-      'result': float(computation.result),
-      'probability': float(computation.probability),
-    })
+    return computation.toJSON()
   except Exception as e:
     print(f"ERROR: {str(e)}", flush=True)
     return json.dumps({'error': str(e)})
@@ -42,6 +39,5 @@ def home():
   return render_template('index.html')
 
 # TODO handle logging
-# TODO if wrong image is sent?
 if __name__ == "__main__":
   app.run(debug=True)

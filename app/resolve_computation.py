@@ -1,5 +1,6 @@
 from predict_image import predict, PredictionResult
 from prepare_image import prepare_image_from_data
+import json
 
 operations = {
   '+': lambda a,b : a + b,
@@ -17,9 +18,31 @@ class SumImagesInput:
     self.operation = operation
 
 class ImagesSumResult:
-  def __init__(self, result: float, probability: float):
+  def __init__(
+      self,
+      result: float,
+      probability: float,
+      number1_result: float,
+      number1_probability: float,
+      number2_result: float,
+      number2_probability: float,
+  ):
     self.result = result
     self.probability = probability
+    self.number1_result = number1_result
+    self.number1_probability = number1_probability
+    self.number2_result = number2_result
+    self.number2_probability = number2_probability
+  
+  def toJSON(self):
+    return json.dumps({
+      'result': float(self.result),
+      'probability': float(self.probability),
+      'number1_result': float(self.number1_result),
+      'number1_probability': float(self.number1_probability),
+      'number2_result': float(self.number2_result),
+      'number2_probability': float(self.number2_probability),
+    })
 
 def resolve(input: SumImagesInput) -> ImagesSumResult:
   prepared_image_1 = prepare_image_from_data(input.image_1)
@@ -31,4 +54,8 @@ def resolve(input: SumImagesInput) -> ImagesSumResult:
   return ImagesSumResult(
     result = operations[input.operation](a.result, b.result),
     probability = a.probability * b.probability,
+    number1_result = a.result,
+    number1_probability = a.probability,
+    number2_result = b.result,
+    number2_probability = b.probability,
   )
