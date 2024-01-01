@@ -1,9 +1,45 @@
 # snapmath
 
-## TOC
-1. [Design Document](./design-doc.md);
-2. [Jupyter Notebook of model](./model/snapmath.ipynb);
-3. [Saving a built and trained model](#saving-a-built-and-trained-mode);
+## Project TOC
+1. [Just want to run the project](#running-from-docker);
+2. [The app in action](#app-in-action);
+3. [Design Document](./design-doc.md);
+4. [Jupyter Notebook of model](./machine-learning/snapmath.ipynb);
+5. [Saving a built and trained model](#saving-a-built-and-trained-mode);
+6. [Contribution](#contribution);
+
+## Running from docker
+
+```sh
+docker run -p 5000:5000 -e MODEL_VERSION="1703825980" buarki/snapmath-app
+```
+
+## App in action
+
+<img src="./imgs/app-in-action-1.png" width="350" alt="App in action">
+<img src="./imgs/app-in-action-2.png" width="350" alt="App in action">
+<img src="./imgs/app-in-action-3.png" width="350" alt="App in action">
+<img src="./imgs/app-in-action-4.png" width="350" alt="App in action">
+<img src="./imgs/app-in-action-5.png" width="350" alt="App in action">
+<img src="./imgs/app-in-action-6.png" width="350" alt="App in action">
+<img src="./imgs/app-in-action-7.png" width="350" alt="App in action">
+
+
+## Running from source code
+
+You can execute the app using the already define [Makefile](./Makefile) commands. To build the docker image run:
+
+```sh
+make build-app
+```
+
+Then, to run the app you can do:
+
+```sh
+make run-app
+```
+
+Once running go to http://localhost:5000. You can find some images to use at the [ML directory](/machine-learning/numbers/).
 
 ## Saving a built and trained mode
 
@@ -45,3 +81,7 @@ where:
 - /home/jovyan/snapmath-model/1703825980 is the new model to be saved
 
 
+## Contribution
+
+Contributions are wellcome!
+If you find something interesting to improve just open a PR :)
