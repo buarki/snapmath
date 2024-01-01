@@ -5,7 +5,7 @@ operations = {
   '+': lambda a,b : a + b,
   '-': lambda a,b : a - b,
   '*': lambda a,b: a * b,
-  '/': lambda a, b: a / b if b != 0 else float('nan'),
+  '/': lambda a, b: a / b if b != 0.0 else float('nan'),
 }
 
 class SumImagesInput:
@@ -17,7 +17,7 @@ class SumImagesInput:
     self.operation = operation
 
 class ImagesSumResult:
-  def __init__(self, result, probability):
+  def __init__(self, result: float, probability: float):
     self.result = result
     self.probability = probability
 
