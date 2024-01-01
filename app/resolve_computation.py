@@ -1,5 +1,3 @@
-from predict_image import predict, PredictionResult
-from prepare_image import prepare_image_from_data
 import json
 
 operations = {
@@ -44,18 +42,29 @@ class ImagesSumResult:
       'number2_probability': float(self.number2_probability),
     })
 
-def resolve(input: SumImagesInput) -> ImagesSumResult:
-  prepared_image_1 = prepare_image_from_data(input.image_1)
-  a = predict(prepared_image_1)
-  print(f"a result {a.result}, prob: {a.probability}", flush=True)
-  prepared_image_1 = prepare_image_from_data(input.image_2)
-  b = predict(prepared_image_1)
-  print(f"b result {b.result}, prob: {b.probability}", flush=True)
-  return ImagesSumResult(
-    result = operations[input.operation](a.result, b.result),
-    probability = a.probability * b.probability,
-    number1_result = a.result,
-    number1_probability = a.probability,
-    number2_result = b.result,
-    number2_probability = b.probability,
-  )
+'''
+computation_factory is a factory to build the inference function. It receives two functions as arguments:
+- prepare_image_from_data: a function to get image bytes and traform into a valid inference input;
+- infer: a function that receives a tensor (1, 28, 28, 1) and gives the inferred number with its probability.
+'''
+def computation_factory(prepare_image_from_data, infer):
+  
+  '''
+  infer performs the inference on given
+  '''
+  def compute(input: SumImagesInput) -> ImagesSumResult:
+    prepared_image_1 = prepare_image_from_data(input.image_1)
+    a = infer(prepared_image_1)
+    print(f"a result {a.result}, prob: {a.probability}", flush=True)
+    prepared_image_1 = prepare_image_from_data(input.image_2)
+    b = infer(prepared_image_1)
+    print(f"b result {b.result}, prob: {b.probability}", flush=True)
+    return ImagesSumResult(
+      result = operations[input.operation](a.result, b.result),
+      probability = a.probability * b.probability,
+      number1_result = a.result,
+      number1_probability = a.probability,
+      number2_result = b.result,
+      number2_probability = b.probability,
+    )
+  return compute
