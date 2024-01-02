@@ -55,10 +55,8 @@ def computation_factory(prepare_image_from_data, infer):
   def compute(input: SumImagesInput) -> ImagesSumResult:
     prepared_image_1 = prepare_image_from_data(input.image_1)
     a = infer(prepared_image_1)
-    print(f"a result {a.result}, prob: {a.probability}", flush=True)
     prepared_image_1 = prepare_image_from_data(input.image_2)
     b = infer(prepared_image_1)
-    print(f"b result {b.result}, prob: {b.probability}", flush=True)
     return ImagesSumResult(
       result = operations[input.operation](a.result, b.result),
       probability = a.probability * b.probability,
