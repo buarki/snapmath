@@ -13,11 +13,10 @@ def prepare_computation_executor_or_fail():
   return computation_factory(prepare_image_from_data, infer)
 
 def load_inference_model():
-  model_version = os.environ.get("MODEL_VERSION")
-  if model_version is None:
-    print("Error: MODEL_VERSION environment variable is not set.")
+  MODEL_PATH = os.environ.get("MODEL_PATH")
+  if MODEL_PATH is None:
+    print("Error: MODEL_PATH environment variable is not set.")
     sys.exit(1)
 
-  model_name = f'models/{model_version}'
   print(">> loading model...", flush=True)
-  return tf.saved_model.load(model_name)
+  return tf.saved_model.load(MODEL_PATH)
