@@ -7,7 +7,8 @@
 4. [Jupyter Notebook of model](./machine-learning/snapmath.ipynb);
 5. [Local development](#running-from-source-code);
 6. [Saving a built and trained model](#saving-a-built-and-trained-mode);
-7. [Contribution](#contribution);
+7. [Exposing the model on Tensorflow serving](#exposing-the-model-using-tensorflow-serving);
+8. [Contribution](#contribution);
 
 ## Running from docker
 
@@ -105,6 +106,20 @@ where:
 - 2c40e8ce7197 is the container jupyter notebook container id
 - /home/jovyan/snapmath-model/1703825980 is the new model to be saved
 
+## Exposing the model using TensorFlow Serving
+In order to see a trained model running performing the inferences, we can leverage [TensorFlow Serving](https://www.tensorflow.org/tfx/serving/architecture), which is a prepared docker image able to load the model and make it available via REST or gRPC. The [Makefile](./Makefile) already has a command to expose a collected model in it. First, we need to build the image based on the [provided Dockerfile](./tensor-flow-serving/Dockerfile) adding the [collected models](./models/) inside of it:
+
+```sh
+make build-tf-serving
+```
+
+Then we can run:
+
+```sh
+make run-tf-service
+```
+
+The REST API will be available at localhost:8501, and you can easily call this API using the [provided client using Jupyter Notebook](./machine-learning/tensorflow-serving-client.ipynb).
 
 ## Contribution
 
