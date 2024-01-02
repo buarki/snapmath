@@ -8,7 +8,8 @@
 5. [Local development](#running-from-source-code);
 6. [Saving a built and trained model](#saving-a-built-and-trained-mode);
 7. [Exposing the model on Tensorflow serving](#exposing-the-model-using-tensorflow-serving);
-8. [Contribution](#contribution);
+8. [Next steps](#next-steps);
+9. [Contribution](#contribution);
 
 ## Running from docker
 
@@ -120,6 +121,11 @@ make run-tf-service
 ```
 
 The REST API will be available at localhost:8501, and you can easily call this API using the [provided client using Jupyter Notebook](./machine-learning/tensorflow-serving-client.ipynb).
+
+## Next steps
+For now I see two interesting points to inspect:
+- Check if is it possible to run this model using [Tensor Flow JS](https://github.com/tensorflow/tfjs) (considering the image processing step of converting to grayscale, resizing, normalizing...);
+- Check if is it possible to run this model using Go;
 
 ## Contribution
 
