@@ -5,13 +5,14 @@
 2. [The app in action](#app-in-action);
 3. [Design Document](./design-doc.md);
 4. [Jupyter Notebook of model](./machine-learning/snapmath.ipynb);
-5. [Saving a built and trained model](#saving-a-built-and-trained-mode);
-6. [Contribution](#contribution);
+5. [Local development](#running-from-source-code);
+6. [Saving a built and trained model](#saving-a-built-and-trained-mode);
+7. [Contribution](#contribution);
 
 ## Running from docker
 
 ```sh
-docker run -p 5000:5000 -e MODEL_VERSION="1703825980" buarki/snapmath-app
+docker run -p 5000:5000 -e MODEL_PATH="./models/1703825980" buarki/snapmath-app
 ```
 
 Once running go to http://localhost:5000. You can find some images to use at the ML directory.
@@ -29,17 +30,39 @@ Once running go to http://localhost:5000. You can find some images to use at the
 
 ## Running from source code
 
-You can execute the app using the already define [Makefile](./Makefile) commands. To build the docker image run:
+To develop the app you can follow this steps:
+
+1. enter the app directory:
 
 ```sh
-make build-app
+cd app
 ```
 
-Then, to run the app you can do:
+2. Initialize virtual env:
 
 ```sh
-make run-app
+python3 -m venv app/snapmath
 ```
+
+3. Activate the virtual env:
+
+```sh
+source snapmath/bin/activate
+```
+
+4. Install dependencies:
+
+```sh
+pip3 install -r requirements.txt
+```
+
+5. To Run the app:
+
+```sh
+MODEL_PATH="../models/1703825980" python3 -m flask run --host=0.0.0.0
+```
+
+MODEL_PATH is pointing to the saved model [1703825980](./models/1703825980/).
 
 Once running go to http://localhost:5000. You can find some images to use at the [ML directory](/machine-learning/numbers/).
 
