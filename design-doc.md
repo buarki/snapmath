@@ -95,7 +95,7 @@ To effectively extract features that enable the identification of a "1" regardle
 
 And to further make this feature extraction consistent we can combine the convolutions with **pooling** as it helps in creating a more abstract representation of the input, making the model less sensitive to the exact spatial location of features. This means that even if the position, size, or lighting conditions of a drawn "1" differ, the CNN's feature extraction mechanism remains consistent, facilitating accurate identification.
 
-Thus, the first part of the Neural Network will be in charge of detecting and collecting the features from the images and giving them on a vector. Such vector then will be fed into a regular fully connected Neural Network to perform the learning.
+Thus, the first part of the Neural Network will be in charge of detecting and collecting the features from the images and placing them on a vector. Such vector then will be fed into a regular fully connected Neural Network to perform the learning.
 
 ### 9.4. Learning from the features: Fully Connected Networks
 
@@ -134,6 +134,8 @@ From this point we stuck in two options: either deploy the built model into Tens
 | Inference Latency | Lower latency due to direct model access  | Slightly higher latency due to communication with a separate service   |
 | Model Updates	 | Requires redeployment of the entire backend	  | Allows for independent updates and rollbacks of the serving service  |
 
-Considering above aspects and the requirement that the project must run for free we'll proceed with the monolith solution we'll be able to serve the very application using a "single deployment". Thus, the final application overview is the following:
+Considering above aspects and the requirement that the project must run for free we'll proceed with the monolith solution we'll be able to serve the very application using a "single deployment". And the first strategy to consume the model from the app will be attach it in the docker image and pass its path as an application param.
+
+Thus, the final application overview is the following:
 
 <img src="./imgs/architecture-overview-3.png" width="512" alt="The next step into defining the final architecture">
