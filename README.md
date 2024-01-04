@@ -129,5 +129,5 @@ For now I see two interesting points to inspect:
 
 ## Contribution
 
-Contributions are wellcome!
+Contributions are welcome!
 If you find something interesting to improve just open a PR :)
