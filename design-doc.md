@@ -24,6 +24,7 @@
 ](#10-deploying-the-model-to-be-used-mlops-in-action);
   - [10.1. Introduction](#101-introduction);
   - [10.2. Assessing the architectural options](#102-assessing-the-architectural-options);
+  - [10.3. Image preprocessing](#103-image-preprocessing);
 
 ## 1. Context Overview
 
@@ -139,3 +140,23 @@ Considering above aspects and the requirement that the project must run for free
 Thus, the final application overview is the following:
 
 <img src="./imgs/architecture-overview-3.png" width="512" alt="The next step into defining the final architecture">
+
+### 10.3. Image preprocessing
+
+The model will be trained using a 28x28 grayscale image. The majority of images that will be inputed into the model will probably be different thant that, for instance, it could be a colorful image, it could have shape 173x100 etc.
+
+Moreover, the MNIST dataset has a peculiar way to represent images: the "effective image area" representing the number per se has values in the range of 0-255, while the "empty areas" are considered 0. One concrete example of number 8 can be seen bellow:
+
+<img src="./imgs/mnist-number.png" width="550" alt="MNIST 3 example"/>
+
+Real world images are represented using a different approach in which the background is typically lighter than the foreground. Hance, we need to invert the pixel values.
+
+Due to that, we need to preprocess the given images before running the model inference. This process must involve:
+- converting image in grayscale (to ensure that the input image has a single channel);
+- inverting the pixels (to ensure that foreground is lighter than background like the images we will use to train the model);
+- normalizing the image (apply element wise the division by 255);
+- resizing the image to be 28x28 (the shape that the model will use);
+
+Such process performed against an image (X, Y, W), where X is the width, Y the height and W the channels, should return an image with shape (28, 28, 1).
+
+And one last step before feeding the image into the model is creating an input tensor having shape (1, 28, 28, 1), which means a tensor with one element (the image) with 28 pixels of width, 28 pixels of heigh and 1 channel.
