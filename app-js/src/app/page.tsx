@@ -52,6 +52,11 @@ export default function Home() {
     }
   };
 
+  const cleanInputs = () => {
+    setNumberImage1(emptyNumberImage);
+    setNumberImage2(emptyNumberImage);
+  };
+
   useEffect(() => {
     const loadModel = async () => {
       // todo adjust it
@@ -65,10 +70,10 @@ export default function Home() {
   useEffect(() => {}, [numberImage1, numberImage2]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full">
       <h1 className="text-4xl font-bold mb-8">snapmath</h1>
 
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+      <div className="bg-white p-8 rounded shadow-md md:flex md:gap-12 md:items-center md:justify-center">
         <LoadNumberImage alt="Image 1" image={numberImage1} onImageLoded={handleImage1Change}/>
 
         <div className="mb-4">
@@ -85,6 +90,10 @@ export default function Home() {
           </div>  
         }
       </div>
+
+      <button
+        onClick={cleanInputs}
+        className="mt-8 bg-blue-400 hover:bg-blue-300 p-2 text-white font-bold">Clear</button>
     </div>
   );
 };
