@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 const title = 'snapmath';
-const description = 'Funny webapp to solve mazes.';
+const description = 'Machine Learning app to compute math operation with given digits.';
 const siteURL = process.env.SITE_URL;
 const authorName = process.env.AUTHOR_NAME;
 
