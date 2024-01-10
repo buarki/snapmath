@@ -99,6 +99,8 @@ npm run dev
 
 Once running go to http://localhost:3000. You can find some images to use at the [ML directory](/machine-learning/numbers/).
 
+For more info, see the full [project here](/app-js).
+
 ## Saving a built and trained mode
 
 You can collect and save your built model by using this script. Just follow bellow steps:
