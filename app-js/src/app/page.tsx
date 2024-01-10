@@ -12,6 +12,9 @@ import { NumberImage } from "@snapmath/types/number-image";
 import { Operation, operationsMap } from "@snapmath/types/operation";
 
 const MODEL_PATH = '/tfjs_model/model.json';
+const KB = 1024;
+const MAX_ALLOWED_IMAGE_SIZE = 500 * KB;
+
 
 const emptyNumberImage = {
   value: Number.NaN,
@@ -24,32 +27,15 @@ export default function Home() {
   const [operation, setOperation] = useState<Operation>(Operation.SUM);
   const [model, setModel] = useState<tf.GraphModel<string | IOHandler>>();
 
-  const handleImage1Change = async (e: LoadedMedia) => {
-    const file = e.target.files![0];
-    if (file) {
-      const loadedImage1 = await loadImageFromFile(file);
-      // @ts-ignore
-      const { predictedNumber, probability } = runInference(model, loadedImage1);
-      setNumberImage1({
-        probability,
-        value: predictedNumber,
-        imageURL: URL.createObjectURL(file),
-      });
-    }
-  };
-
-  const handleImage2Change = async (e: LoadedMedia) => {
-    const file = e.target.files![0];
-    if (file) {
-      const loadedImage2 = await loadImageFromFile(file);
-      // @ts-ignore
-      const { predictedNumber, probability } = runInference(model, loadedImage2);
-      setNumberImage2({
-        probability,
-        value: predictedNumber,
-        imageURL: URL.createObjectURL(file),
-      });
-    }
+  const handleImageChange = async (file: File, updateNumberImageState: any) => {
+    const loadedImage1 = await loadImageFromFile(file);
+    // @ts-ignore
+    const { predictedNumber, probability } = runInference(model, loadedImage1);
+    updateNumberImageState({
+      probability,
+      value: predictedNumber,
+      imageURL: URL.createObjectURL(file),
+    });
   };
 
   const cleanInputs = () => {
@@ -70,17 +56,27 @@ export default function Home() {
   useEffect(() => {}, [numberImage1, numberImage2]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-full">
+    <div className="flex flex-col items-center justify-center w-full h-full flex-auto">
       <h1 className="text-4xl font-bold mb-8">snapmath</h1>
 
-      <div className="bg-white p-8 rounded shadow-md md:flex md:gap-12 md:items-center md:justify-center">
-        <LoadNumberImage alt="Image 1" image={numberImage1} onImageLoded={handleImage1Change}/>
+      <div className="bg-white p-8 rounded shadow-xl md:flex md:gap-12 md:items-center md:justify-center">
+        <LoadNumberImage
+          maxAllowedFile={MAX_ALLOWED_IMAGE_SIZE}
+          labelMessage="Select Image 1 (Max 500KB):"
+          alt="Image 1"
+          image={numberImage1}
+          onImageLoded={(e) => handleImageChange(e, setNumberImage1)}/>
 
         <div className="mb-4">
           <MathOperationSelect onOperationSelected={setOperation}/>
         </div>
 
-        <LoadNumberImage alt="Image 2" image={numberImage2} onImageLoded={handleImage2Change}/>
+        <LoadNumberImage
+          maxAllowedFile={MAX_ALLOWED_IMAGE_SIZE}
+          labelMessage="Select Image 2 (Max 500KB):"
+          alt="Image 2" 
+          image={numberImage2}
+          onImageLoded={(e) => handleImageChange(e, setNumberImage2)}/>
 
         {
           !!numberImage1.value && !!numberImage2.value &&
@@ -93,7 +89,7 @@ export default function Home() {
 
       <button
         onClick={cleanInputs}
-        className="mt-8 bg-blue-400 hover:bg-blue-300 p-2 text-white font-bold">Clear</button>
+        className="mt-8 bg-primary hover:bg-primary-hover p-2 text-white font-bold">Clear</button>
     </div>
   );
 };

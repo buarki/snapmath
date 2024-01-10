@@ -5,11 +5,12 @@
 2. [The app in action](#app-in-action);
 3. [Design Document](./design-doc.md);
 4. [Jupyter Notebook of model](./machine-learning/snapmath.ipynb);
-5. [Local development](#running-from-source-code);
-6. [Saving a built and trained model](#saving-a-built-and-trained-mode);
-7. [Exposing the model on Tensorflow serving](#exposing-the-model-using-tensorflow-serving);
-8. [Next steps](#next-steps);
-9. [Contribution](#contribution);
+5. [App local development (Python)](#running-python-app-from-source-code);
+6. [App local development (React)](#running-react-app-from-source-code);
+7. [Saving a built and trained model](#saving-a-built-and-trained-mode);
+8. [Exposing the model on Tensorflow serving](#exposing-the-model-using-tensorflow-serving);
+9. [Next steps](#next-steps);
+10. [Contribution](#contribution);
 
 ## Running from docker
 
@@ -30,7 +31,7 @@ Once running go to http://localhost:5000. You can find some images to use at the
 <img src="./imgs/app-in-action-7.png" width="350" alt="App in action">
 
 
-## Running from source code
+## Running Python app from source code
 
 To develop the app you can follow this steps:
 
@@ -67,6 +68,36 @@ MODEL_PATH="../models/1703825980" python3 -m flask run --host=0.0.0.0
 MODEL_PATH is pointing to the saved model [1703825980](./models/1703825980/).
 
 Once running go to http://localhost:5000. You can find some images to use at the [ML directory](/machine-learning/numbers/).
+
+## Running React app from source code
+
+To develop the app you can follow this steps:
+
+1. enter the app directory:
+
+```sh
+cd app-js
+```
+
+2. Set Node version to 19.0.0:
+
+```sh
+nvm 19.0.0
+```
+
+3. Install dependencies:
+
+```sh
+npm i
+```
+
+4. Run
+
+```sh
+npm run dev
+```
+
+Once running go to http://localhost:3000. You can find some images to use at the [ML directory](/machine-learning/numbers/).
 
 ## Saving a built and trained mode
 
@@ -124,7 +155,6 @@ The REST API will be available at localhost:8501, and you can easily call this A
 
 ## Next steps
 For now I see two interesting points to inspect:
-- Check if is it possible to run this model using [Tensor Flow JS](https://github.com/tensorflow/tfjs) (considering the image processing step of converting to grayscale, resizing, normalizing...);
 - Check if is it possible to run this model using Go;
 
 ## Contribution
