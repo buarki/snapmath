@@ -6,25 +6,23 @@
 
 - [1.Context Overview](#1-context-overview);
 - [2. Goals of this project](#2-goals-of-this-project);
-- [3. Functional Requirements](#3-functional-requirements);
-- [4. Non-functional requirements](#4-non-functional-requirements);
-- [5. Assumptions](#5-assumptions);
-- [6. Limitations](#6-limitations);
-- [7. Dependencies](#7-dependencies);
-- [8. Challenges Ahead](#8-challenges-ahead);
-- [9. Building the model](#9-building-the-model);
-  - [9.1. Introduction](#91-introduction);
-  - [9.2. MNIST dataset](#92-mnist-dataset)
-  - [9.3. Extracting features: Convolutional Neural Networks](#93-extracting-features-convolutional-neural-networks);
-  - [9.4. Learning from the features: Fully Connected Networks
-](#94-learning-from-the-features-fully-connected-networks);
-  - [9.5. Refining hyperparameters and layer's input/output shape
-](#95-refining-hyperparameters-and-layers-inputoutput-shape);
-- [10. Deploying the model to be used: MLOps in action
-](#10-deploying-the-model-to-be-used-mlops-in-action);
+- [3. Non-Goals of this project](#3-non-goals-of-this-project);
+- [4. Functional Requirements](#4-functional-requirements);
+- [5. Non-functional requirements](#5-non-functional-requirements);
+- [6. Assumptions](#6-assumptions);
+- [7. Limitations](#7-limitations);
+- [8. Dependencies](#8-dependencies);
+- [9. Challenges Ahead](#9-challenges-ahead);
+- [10. Building the model](#10-building-the-model);
   - [10.1. Introduction](#101-introduction);
-  - [10.2. Assessing the architectural options](#102-assessing-the-architectural-options);
-  - [10.3. Image preprocessing](#103-image-preprocessing);
+  - [10.2. MNIST dataset](#102-mnist-dataset)
+  - [10.3. Extracting features: Convolutional Neural Networks](#103-extracting-features-convolutional-neural-networks);
+  - [10.4. Learning from the features: Fully Connected Networks](#104-learning-from-the-features-fully-connected-networks);
+  - [10.5. Refining hyperparameters and layer's input/output shape](#105-refining-hyperparameters-and-layers-inputoutput-shape);
+- [11. Deploying the model to be used: MLOps in action](#11-deploying-the-model-to-be-used-mlops-in-action);
+  - [11.1. Introduction](#111-introduction);
+  - [11.2. Assessing the architectural options](#112-assessing-the-architectural-options);
+  - [11.3. Image preprocessing](#113-image-preprocessing);
 
 ## 1. Context Overview
 
@@ -46,44 +44,47 @@ And once images of numbers are loaded and user hits button `=`:
 - Get acquainted with [Jupyter notebook](https://jupyter.org/) as it is a widely used tool in by the industry;
 - Get acquainted with strategies to deploy Machine Learning models once trained, such as [TensorFlow Serving](https://www.tensorflow.org/tfx/serving/architecture);
 
-## 3. Functional Requirements
+## 3. Non-Goals of this project
+- Create a 100% professional and production-ready model with high accuracy, this is not the focus here.
+
+## 4. Functional Requirements
 - One user must select two image of single digit numbers to perform a simple math operation (+, *, / -), press "=" and get the result;
 - System needs to run for free;
 
-## 4. Non-functional requirements
+## 5. Non-functional requirements
 - Support jpg, jpeg, png image formats (basic formats);
 - Image max allowed size must be 500KB;
 
-## 5. Assumptions
+## 6. Assumptions
 - It won't be used in large scale, it is just a small machine learning project;
 - It will be used on desktop or smarthphone;
 
-## 6. Limitations
+## 7. Limitations
 - As the model will be built based on MNIST, we will support only single-digit numbers—0 to 9, at least for this version ;)
 - As the image will be shrunk to a 28x28 shape, depending on how big the picture is it might get too blurred and the prediction might be affected;
 
-## 7. Dependencies
+## 8. Dependencies
 - [MNIST dataset](https://www.kaggle.com/datasets/hojjatk/mnist-dataset);
 - [Jupyter notebook](https://jupyter.org/);
 - [TensorFlow](https://www.tensorflow.org);
 
-## 8. Challenges ahead
+## 9. Challenges ahead
 - Deploy the "web site" without costs;
 - Provide a simple, minimalist and effective UI for users;
 
-## 9. Building the model
+## 10. Building the model
 
-### 9.1. Introduction
+### 10.1. Introduction
 
 This part will probably be the most challenging. It'll involve getting the dataset, planning the neural net topology, building, evaluating, and then exporting the model.
 
-### 9.2. MNIST dataset
+### 10.2. MNIST dataset
 
 As mentioned before, the dataset used will be MNIST, which includes a collection of handwritten digits along with their associated numbers. The dataset comprises square images of 28 pixels in width and 28 pixels in height, organized in a CSV (Comma Separated Values) file as a flattened vector of length 784 pixels, with a column indicating the associated digit. A quick overview of how this dataset looks, showing the label and the first 14 pixels (from 0 to 13), can be seen in the image below:
 
 <img src="./imgs/mnist-simple-view.png" width="350" alt="A chunk of MNIST showing the label and the first 14 pixels">
 
-### 9.3. Extracting features: Convolutional Neural Networks
+### 10.3. Extracting features: Convolutional Neural Networks
 
 Due to the fact that numbers can be drawn in different ways, one relevant aspect to plan the Neural Network is the **translation invariance**, because the app may be fed with a plenty of different forms of number 1s, thus, different forms of invariaces, like size, perspective and lighting. Bellow images might give an example of this.
 
@@ -98,21 +99,21 @@ And to further make this feature extraction consistent we can combine the convol
 
 Thus, the first part of the Neural Network will be in charge of detecting and collecting the features from the images and placing them on a vector. Such vector then will be fed into a regular fully connected Neural Network to perform the learning.
 
-### 9.4. Learning from the features: Fully Connected Networks
+### 10.4. Learning from the features: Fully Connected Networks
 
 Once the features that makes a "1" be a "1" are found we can pass it into a fully connected Neural Network and peform the training adjusting the weights untill it starts giving accurate predictions of which number the image is corrsponding.
 
-### 9.5. Refining hyperparameters and layer's input/output shape
+### 10.5. Refining hyperparameters and layer's input/output shape
 
 Defining the proper hyperparameters such as **learning** rate and the shape of input and output of each layer is a crucial part of the Neural Network topology. To do so I'll perform some benchmarking with the help of ChatGPT, which will be my mate and assistant during this project :)
 
-## 10. Deploying the model to be used: MLOps in action
+## 11. Deploying the model to be used: MLOps in action
 
-### 10.1. Introduction
+### 11.1. Introduction
 
 Wraping the built and trained model into an usable app will be the last step of this project. In this section we'll discuss what we will use and why in order to make it aviable.
 
-### 10.2. Assessing the architectural options
+### 11.2. Assessing the architectural options
 
 For sure we'll need some way to deliver a frontend application with a minimal Javascript to be able to get loaded images and ask to some server what the answear is. We can visualize it with bellow image:
 
@@ -141,7 +142,7 @@ Thus, the final application overview is the following:
 
 <img src="./imgs/architecture-overview-3.png" width="512" alt="The next step into defining the final architecture">
 
-### 10.3. Image preprocessing
+### 11.3. Image preprocessing
 
 The model will be trained using a 28x28 grayscale image. The majority of images that will be inputed into the model will probably be different thant that, for instance, it could be a colorful image, it could have shape 173x100 etc.
 
