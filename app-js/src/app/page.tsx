@@ -2,7 +2,6 @@
 
 import { LoadNumberImage } from "@snapmath/components/load-number-image.component";
 import { MathOperationSelect } from "@snapmath/components/math-operation-select.component";
-import { LoadedMedia } from "@snapmath/types/loaded-media";
 import { useEffect, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import { IOHandler } from "@tensorflow/tfjs-core/dist/io/types";
@@ -10,11 +9,11 @@ import { loadImageFromFile } from "@snapmath/lib/load-image";
 import { runInference } from "@snapmath/lib/inference-executor";
 import { NumberImage } from "@snapmath/types/number-image";
 import { Operation, operationsMap } from "@snapmath/types/operation";
+import { ImagesSamples } from "@snapmath/components/images-samples.component";
 
 const MODEL_PATH = '/tfjs_model/model.json';
 const KB = 1024;
 const MAX_ALLOWED_IMAGE_SIZE = 500 * KB;
-
 
 const emptyNumberImage = {
   value: Number.NaN,
@@ -58,7 +57,6 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full flex-auto">
       <h1 className="text-4xl font-bold mb-8">snapmath</h1>
-
       <div className="bg-white p-8 rounded shadow-xl md:flex md:gap-12 md:items-center md:justify-center">
         <LoadNumberImage
           maxAllowedFile={MAX_ALLOWED_IMAGE_SIZE}
@@ -90,6 +88,13 @@ export default function Home() {
       <button
         onClick={cleanInputs}
         className="mt-8 bg-primary hover:bg-primary-hover p-2 text-white font-bold">Clear</button>
+
+      <ImagesSamples images={[
+        { src: "/imgs/4-1.jpg", alt: `Digit 4`, digit: 4 },
+        { src: "/imgs/2-00.jpg", alt: `Digit 2`, digit: 2 },
+        { src: "/imgs/1-sample.jpg", alt: `Digit 1`, digit: 1 },
+        { src: "/imgs/3-2.png", alt: `Digit 3`, digit: 3 },
+        ]}/>
     </div>
   );
 };
