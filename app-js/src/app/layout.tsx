@@ -26,8 +26,8 @@ const steps = [
   },
   {
     title: 'How The Image Should Be?',
-    mainText: 'Use simple images with single digit numbers',
-    secondaryText: 'Use simple images, without embellishments and prefer the digit being solid, like the first image bellow',
+    mainText: 'Use simple images with single digit numbers.',
+    secondaryText: 'Use simple images, without embellishments and prefer the digit being solid, like the first image bellow:',
     imageSrc: '/imgs/step-3.webp',
     currentPage: 3,
     amountOfPages: 3,
