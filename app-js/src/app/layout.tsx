@@ -18,7 +18,7 @@ const steps = [
   },
   {
     title: 'How To Use It?',
-    mainText: 'Just upload images of single digit numbers and check the result with its accurancy.',
+    mainText: 'Just upload images of single digit numbers and check the result with its accuracy.',
     secondaryText: 'As MNIST was the dataset used to train it, prefer using small images with white background. You can find some examples to use once you finish this tutorial.',
     imageSrc: '/imgs/step-2.webp',
     currentPage: 2,
